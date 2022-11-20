@@ -1,3 +1,10 @@
+### Requirements
+
+- php 8.1+
+- composer
+- mysql 8+
+- node.js 18+
+
 ### Installation
 
 1. cd to project folder
@@ -53,7 +60,7 @@ php artisan schedule:work
 mysql -u db_user_name -p
 ```
 
-```bash
+```mysql
 CREATE DATABASE covid19_testing;
 ```
 

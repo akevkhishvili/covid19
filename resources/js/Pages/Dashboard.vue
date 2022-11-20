@@ -10,20 +10,20 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{__('Dashboard')}}
+                {{ __('Dashboard') }}
             </h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="mt-2">
-                        <LanguageSelector />
+                        <LanguageSelector/>
                     </div>
                     <div class="p-6 text-gray-900">
                         <div style="max-width:700px; margin: 100px auto;">
 
                             <div class="flex items-center">
-                                <label for="search_field" class="sr-only">{{__('Search')}}</label>
+                                <label for="search_field" class="sr-only">{{ __('Search') }}</label>
                                 <div class="relative w-full">
                                     <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                         <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -43,15 +43,34 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
                                     >
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mb-3">
+                            <div class="row-start">
+                                <div class="dashboard-card">
+                                    <h5 class="dashboard-card-h5">{{ __('Confirmed') }}</h5>
+                                    <p class="dashboard-card-p text-yellow-700 dark:text-yellow-400">{{ confirmed }}</p>
+                                </div>
+                            </div>
+                            <div class="row-start">
+                                <div class="dashboard-card">
+                                    <h5 class="dashboard-card-h5">{{ __('Recovered') }}</h5>
+                                    <p class="dashboard-card-p text-green-700 dark:text-green-400">{{ recovered }}</p>
+                                </div>
+                            </div>
+                            <div class="row-start">
+                                <div class="dashboard-card">
+                                    <h5 class="dashboard-card-h5">{{ __('Deaths') }}</h5>
+                                    <p class="dashboard-card-p text-red-700 dark:text-red-400">{{ death }}</p>
+                                </div>
+                            </div>
                         </div>
 
                         <table class="min-w-full leading-normal">
                             <thead>
                             <tr>
-                                <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <span class="inline-flex justify-between w-full" @click="sort('code')">{{__('Country')}}, {{__('Code')}}
+                                <th class="dashboard-th">
+                                    <span class="inline-flex justify-between w-full"
+                                          @click="sort('code')">{{ __('Country') }}, {{ __('Code') }}
                                         <svg v-if="params.field === 'code' && params.direction === 'asc'"
                                              xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor"
@@ -75,9 +94,9 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
                                         </svg>
                                     </span>
                                 </th>
-                                <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <span class="inline-flex justify-between w-full" @click="sort('confirmed')">{{__('Confirmed')}}
+                                <th class="dashboard-th">
+                                    <span class="inline-flex justify-between w-full"
+                                          @click="sort('confirmed')">{{ __('Confirmed') }}
 
                                         <svg v-if="params.field === 'confirmed' && params.direction === 'asc'"
                                              xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -103,10 +122,10 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
                                     </span>
 
                                 </th>
-                                <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                <th class="dashboard-th">
 
-                                    <span class="inline-flex justify-between w-full" @click="sort('recovered')">{{__('Recovered')}}
+                                    <span class="inline-flex justify-between w-full"
+                                          @click="sort('recovered')">{{ __('Recovered') }}
                                     <svg v-if="params.field === 'recovered' && params.direction === 'asc'"
                                          xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                          fill="currentColor"
@@ -130,9 +149,9 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
                                         </svg>
                                     </span>
                                 </th>
-                                <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    <span class="inline-flex justify-between w-full" @click="sort('death')">{{__('Deaths')}}
+                                <th class="dashboard-th">
+                                    <span class="inline-flex justify-between w-full"
+                                          @click="sort('death')">{{ __('Deaths') }}
                                      <svg v-if="params.field === 'death' && params.direction === 'asc'"
                                           xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                           fill="currentColor"
@@ -164,8 +183,12 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
 
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap">{{ statistic.country.code }} -
-                                        <span v-if="(usePage().props.value.locale === 'ka')">{{ JSON.parse(statistic.country.name).ka }}</span>
-                                        <span v-else-if="(usePage().props.value.locale === 'en')">{{ JSON.parse(statistic.country.name).en }}</span>
+                                        <span v-if="(usePage().props.value.locale === 'ka')">{{
+                                                JSON.parse(statistic.country.name).ka
+                                            }}</span>
+                                        <span v-else-if="(usePage().props.value.locale === 'en')">{{
+                                                JSON.parse(statistic.country.name).en
+                                            }}</span>
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -188,12 +211,15 @@ import LanguageSelector from '@/Components/LanguageSelector.vue';
 </template>
 <script>
 import {pickBy, throttle} from "lodash";
-import { usePage } from '@inertiajs/inertia-vue3'
+import {usePage} from '@inertiajs/inertia-vue3'
 
 export default {
 
     props: {
         statistics: Object.data,
+        confirmed: Object.data,
+        recovered: Object.data,
+        death: Object.data,
         filters: Object,
     },
     data() {
